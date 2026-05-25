@@ -155,6 +155,7 @@ export default function PaginaHistorialVentas() {
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Folio</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vendedor</th>
                             <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Total</th>
                             <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Acciones</th>
                         </tr>
@@ -166,6 +167,7 @@ export default function PaginaHistorialVentas() {
                                     <td className="px-6 py-4 font-medium">{venta.id}</td>
                                     <td className="px-6 py-4">{venta.fecha}</td>
                                     <td className="px-6 py-4">{venta.cliente}</td>
+                                    <td className="px-6 py-4">{venta.usuario || 'Desconocido'}</td>
                                     <td className="px-6 py-4 text-right font-semibold">${venta.total}</td>
                                     <td className="px-6 py-4 text-right">
                                         <Link href={`/panel_control/ventas/historial/${venta.id}`} className="text-indigo-600 hover:text-indigo-900">
@@ -175,7 +177,7 @@ export default function PaginaHistorialVentas() {
                                 </tr>
                             ))
                         ) : (
-                            <tr><td colSpan="5" className="px-6 py-8 text-center text-gray-500">No se encontraron ventas con estos filtros.</td></tr>
+                            <tr><td colSpan="6" className="px-6 py-8 text-center text-gray-500">No se encontraron ventas con estos filtros.</td></tr>
                         )}
                     </tbody>
                 </table>

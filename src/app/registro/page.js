@@ -11,7 +11,7 @@ export default function PaginaRegistro() {
     // Estados para los campos del formulario
     const [email, setEmail] = React.useState(''); // Estado del correo.
     const [contrasena, setContrasena] = React.useState(''); // Estado de la contrasena.
-    const [nombre_empresa, setNombreEmpresa] = React.useState(''); // Estado del nombre de la empresa.
+    const [nombre_completo, setNombreCompleto] = React.useState(''); // Estado del nombre del usuario.
     
     // Estados para manejar la retroalimentación del usuario
     const [error, setError] = React.useState(null); // Estado del error.
@@ -28,7 +28,7 @@ export default function PaginaRegistro() {
         setExito(null); // Limpiar exitos previos.
 
         // Validacion simple
-        if (!email || !contrasena || !nombre_empresa) {
+        if (!email || !contrasena || !nombre_completo) {
             setError('Todos los campos son obligatorios.');
             setCargando(false); // Finaliza la carga.
             return;
@@ -39,7 +39,7 @@ export default function PaginaRegistro() {
             const respuesta = await axios.post('http://localhost:3001/api/registro', {
                 email: email,
                 contrasena: contrasena,
-                nombre_empresa: nombre_empresa
+                nombre_completo: nombre_completo
             });
 
             // Muestra mensaje de éxito
@@ -82,28 +82,28 @@ export default function PaginaRegistro() {
                         Crear Nueva Cuenta
                     </h1>
                     <p className="mt-2 text-gray-600">
-                        Registra tu microempresa para comenzar.
+                        Registra tu cuenta de administrador para comenzar.
                     </p>
                 </div>
                 
                 <form className="space-y-6" onSubmit={manejar_registro}>
-                    {/* Campo Nombre de la Empresa */}
+                    {/* Campo Nombre Completo */}
                     <div>
                         <label 
-                            htmlFor="nombre_empresa" 
+                            htmlFor="nombre_completo" 
                             className="block text-sm font-medium text-gray-700 mb-1"
                         >
-                            Nombre de la Empresa
+                            Nombre Completo
                         </label>
                         <input
-                            id="nombre_empresa"
-                            name="nombre_empresa"
+                            id="nombre_completo"
+                            name="nombre_completo"
                             type="text"
                             required
                             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black transition duration-150 ease-in-out hover:border-blue-400"
-                            placeholder="Mi Tiendita"
-                            value={nombre_empresa}
-                            onChange={(e) => setNombreEmpresa(e.target.value)}
+                            placeholder="Nombre del Gerente"
+                            value={nombre_completo}
+                            onChange={(e) => setNombreCompleto(e.target.value)}
                         />
                     </div>
 

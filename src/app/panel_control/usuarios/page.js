@@ -13,6 +13,7 @@ export default function PaginaGestionUsuarios() {
     // Estados para el formulario
     const [email, definir_email] = React.useState(''); // Email del usuario.
     const [contrasena, definir_contrasena] = React.useState(''); // Contraseña del usuario.
+    const [nombre_completo, definir_nombre_completo] = React.useState(''); // Nombre completo.
     const [rol_nuevo, definir_rol_nuevo] = React.useState('Empleado'); // Rol por defecto
     const [error_formulario, definir_error_formulario] = React.useState(null); // Error del formulario.
     const [mensaje_exito, definir_mensaje_exito] = React.useState(null); // Mensaje de exito.
@@ -66,7 +67,7 @@ export default function PaginaGestionUsuarios() {
         definir_mensaje_exito_eliminar(null); // Limpiar mensaje de éxito de eliminación
 
         try {
-            const datos_nuevo_usuario = { email, contrasena, rol: rol_nuevo }; // Prepara los datos.
+            const datos_nuevo_usuario = { email, contrasena, rol: rol_nuevo, nombre_completo }; // Prepara los datos.
             const usuario_creado = await crear_usuario(datos_nuevo_usuario); // Llama a la API para crear el usuario.
             const lista_actualizada = await obtener_usuarios(); // Llama a la API para obtener la lista actualizada.
             definir_mensaje_exito(`Usuario ${usuario_creado.email} creado con éxito.`); // Mensaje de exito.
@@ -74,8 +75,8 @@ export default function PaginaGestionUsuarios() {
             // Limpiar formulario
             definir_email(''); // Limpia el campo email.
             definir_contrasena(''); // Limpia el campo contraseña.
+            definir_nombre_completo(''); // Limpia el campo nombre completo.
             definir_rol_nuevo('Empleado'); // Resetea el rol al valor por defecto.
-            definir_usuarios([...usuarios, usuario_creado]); // Actualiza la lista localmente.
             definir_usuarios(lista_actualizada); // Actualiza la lista con la obtenida de la API.
             
 
@@ -179,7 +180,20 @@ export default function PaginaGestionUsuarios() {
                 {error_formulario && <p className="text-red-500 mb-4 text-sm">{error_formulario}</p>}
                 {mensaje_exito && <p className="text-green-600 mb-4 text-sm">{mensaje_exito}</p>}
 
-                <form onSubmit={manejar_submit_crear} className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+                <form onSubmit={manejar_submit_crear} className="grid grid-cols-1 md:grid-cols-5 gap-6 items-end">
+                    {/* Nombre Completo */}
+                    <div className="md:col-span-1">
+                        <label htmlFor="nombre_completo_usuario" className="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                        <input
+                            type="text"
+                            id="nombre_completo_usuario"
+                            value={nombre_completo}
+                            onChange={(e) => definir_nombre_completo(e.target.value)}
+                            required
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            placeholder="Nombre del Empleado"
+                        />
+                    </div>
                     {/* Email */}
                     <div className="md:col-span-1">
                         <label htmlFor="email_usuario" className="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
@@ -190,6 +204,7 @@ export default function PaginaGestionUsuarios() {
                             onChange={(e) => definir_email(e.target.value)}
                             required
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            placeholder="correo@ejemplo.com"
                         />
                     </div>
                     {/* Contraseña */}
@@ -202,6 +217,7 @@ export default function PaginaGestionUsuarios() {
                             onChange={(e) => definir_contrasena(e.target.value)}
                             required
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            placeholder="••••••••"
                         />
                     </div>
                     {/* Rol */}
@@ -247,10 +263,10 @@ export default function PaginaGestionUsuarios() {
                         <thead className="bg-gray-50">
                             <tr>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre Completo</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                                {/* Futura columna para Acciones (Editar/Eliminar) */}
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200 text-black text-sm">
@@ -260,6 +276,7 @@ export default function PaginaGestionUsuarios() {
                                     {editando_usuario_id === usuario.id ? (
                                             <>
                                                 <td className="px-6 py-4 whitespace-nowrap font-medium">{usuario.id}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-gray-550">{usuario.nombre_completo || '-'}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">{usuario.email}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     {/* Select para cambiar el rol */}
@@ -296,6 +313,7 @@ export default function PaginaGestionUsuarios() {
 
                                             <>
                                                 <td className="px-6 py-4 whitespace-nowrap font-medium">{usuario.id}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap">{usuario.nombre_completo || '-'}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">{usuario.email}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
@@ -332,7 +350,7 @@ export default function PaginaGestionUsuarios() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="4" className="px-6 py-4 text-center text-gray-500">No hay usuarios registrados.</td>
+                                    <td colSpan="5" className="px-6 py-4 text-center text-gray-500">No hay usuarios registrados.</td>
                                 </tr>
                             )}
                         </tbody>

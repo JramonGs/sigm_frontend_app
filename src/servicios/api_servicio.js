@@ -30,9 +30,9 @@ instancia_api.interceptors.request.use(
 
 // --- Funciones para interactuar con la API ---
 // En lugar de usar axios.get(...) , usamos instancia_api.get(...).
-export const obtener_productos = async () => {
+export const obtener_productos = async (params = {}) => {
     try {
-        const respuesta = await instancia_api.get('/productos');
+        const respuesta = await instancia_api.get('/productos', { params });
         return respuesta.data;
     } catch (error) {
         console.error('Error al obtener productos:', error);
@@ -87,9 +87,9 @@ export const eliminar_producto = async (id) => {
 };
 
 // Funcion para obtener clientes.
-export const obtener_clientes = async () => {
+export const obtener_clientes = async (params = {}) => {
     try {
-        const respuesta = await instancia_api.get('/clientes');
+        const respuesta = await instancia_api.get('/clientes', { params });
         return respuesta.data;
     } catch (error) {
         console.error('Error al obtener clientes:', error);
@@ -232,9 +232,9 @@ export const eliminar_usuario = async (id_usuario) => {
 };
 
 // Funcion para obtener proveedores.
-export const obtener_proveedores = async () => {
+export const obtener_proveedores = async (params = {}) => {
     try {
-        const respuesta = await instancia_api.get('/proveedores');
+        const respuesta = await instancia_api.get('/proveedores', { params });
         return respuesta.data;
     } catch (error) {
         console.error('Error al obtener proveedores:', error);
@@ -338,41 +338,7 @@ export const obtener_dashboard_analytics = async () => {
     }
 };
 
-// Predicción de tendencia de ventas (Regresión Lineal Simple)
-export const obtener_prediccion_tendencia = async () => {
-    try {
-        const respuesta = await instancia_api.get('/analytics/prediccion-tendencia');
-        return respuesta.data;
-    } catch (error) {
-        console.error('Error al obtener predicción de tendencia:', error);
-        throw error;
-    }
-};
-
-// Auditoría de precios (Regresión Multivariada)
-export const obtener_auditoria_precios = async () => {
-    try {
-        const respuesta = await instancia_api.get('/analytics/auditoria-precios');
-        return respuesta.data;
-    } catch (error) {
-        console.error('Error al obtener auditoría de precios:', error);
-        throw error;
-    }
-};
-
-// Predecir precio individual
-export const predecir_precio = async (items, unicos) => {
-    try {
-        const respuesta = await instancia_api.post('/analytics/predecir-precio', {
-            items,
-            unicos
-        });
-        return respuesta.data;
-    } catch (error) {
-        console.error('Error al predecir precio:', error);
-        throw error;
-    }
-};
+// Las funciones predictivas basadas en regresión lineal (ml-regression) han sido retiradas de esta versión Single-Tenant.
 
 // Top clientes
 export const obtener_top_clientes = async (limite = 10) => {
@@ -396,6 +362,17 @@ export const obtener_alerta_stock_analytics = async (umbral = 10) => {
         return respuesta.data;
     } catch (error) {
         console.error('Error al obtener alerta de stock:', error);
+        throw error;
+    }
+};
+
+// Obtener estadísticas de rendimiento individual del Empleado
+export const obtener_stats_empleado = async () => {
+    try {
+        const respuesta = await instancia_api.get('/analytics/empleado');
+        return respuesta.data;
+    } catch (error) {
+        console.error('Error al obtener estadísticas del empleado:', error);
         throw error;
     }
 };
