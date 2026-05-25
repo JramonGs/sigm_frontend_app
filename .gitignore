@@ -1,0 +1,31 @@
+# Ignorar dependencias
+node_modules/
+
+# Ignorar carpeta de build de Next.js (¡MUY IMPORTANTE!)
+.next/
+
+# Ignorar archivos de build estático (si los usaras)
+out/
+
+# Ignorar logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar archivos de variables de entorno locales (¡MUY IMPORTANTE!)
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignorar archivos generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de documentación de despliegue
+CHECKLIST_DESPLIEGUE.md
+CHECKLIST_VERCEL.md
+DESPLIEGUE_VERCEL.md
+GUIA_DESPLIEGUE.md
